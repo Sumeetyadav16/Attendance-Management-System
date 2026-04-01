@@ -1,0 +1,17 @@
+# React
+attendance-frontend/node_modules/
+attendance-frontend/build/
+
+# Spring Boot
+attendance-backend/target/
+target/
+
+# Python
+face_recognition/__pycache__/
+*.pyc
+
+# Env
+.env
+
+# Logs
+*.log
