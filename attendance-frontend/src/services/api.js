@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const API = axios.create({
-  baseURL: 'http://localhost:8080/api'
+  baseURL: 'https://YOUR-BACKEND-SERVICE.onrender.com/api'  // ✅ paste backend URL here
 })
 
 API.interceptors.request.use((req) => {
@@ -12,4 +12,4 @@ API.interceptors.request.use((req) => {
   return req
 })
 
-export default API  // ← this line is what was missing
+export default API
