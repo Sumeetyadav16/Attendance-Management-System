@@ -2,6 +2,7 @@ package com.attendance.service;
 
 import com.attendance.dto.*;
 import com.attendance.model.*;
+import com.attendance.repository.StudentRepository;
 import com.attendance.repository.UserRepository;
 import com.attendance.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +15,12 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final StudentRepository studentRepository;  // ✅ add this
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
     public String register(RegisterRequest req) {
-        // Validation
         if (userRepository.existsByEmail(req.getEmail()))
             throw new RuntimeException("Email already registered: " + req.getEmail());
 
@@ -40,11 +41,25 @@ public class AuthService {
             .build();
 
         userRepository.save(user);
+
+        // ✅ If student, also save to Student table so faculty can see them
+        if ("STUDENT".equalsIgnoreCase(req.getRole())) {
+            if (!studentRepository.existsByRollNumber(req.getRollNumber())) {
+                Student student = new Student();
+                student.setName(req.getName());
+                student.setRollNumber(req.getRollNumber());
+                student.setCourse(req.getCourse());
+                student.setSection(req.getSection());
+                student.setDepartment("");
+                student.setPassword(passwordEncoder.encode(req.getPassword()));
+                studentRepository.save(student);
+            }
+        }
+
         return "Registration successful. Please login.";
     }
 
     public AuthResponse login(LoginRequest req) {
-        // Spring Security verifies credentials
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword()));
 
