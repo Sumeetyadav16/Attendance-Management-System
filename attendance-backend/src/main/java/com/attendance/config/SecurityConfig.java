@@ -39,11 +39,11 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of(
-            "http://localhost:5173",
-            "http://localhost:3000",
-            "https://attendance-management-system-mq1941il1.vercel.app"  // ✅ your deployed frontend
-        ));
+       configuration.setAllowedOrigins(List.of(
+    "http://localhost:5173",
+    "https://attendance-management-system-six-rho.vercel.app",
+    "https://attendance-management-system-dcohi968g.vercel.app"
+));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
