@@ -4,6 +4,7 @@ import com.attendance.util.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -39,13 +40,13 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-      configuration.setAllowedOrigins(List.of(
-    "http://localhost:5173",
-    "http://localhost:3000",
-    "https://attendance-management-system-six-rho.vercel.app",
-    "https://attendance-management-system-dcohi968g.vercel.app",
-    "https://attendance-management-system-mq1941il1.vercel.app"
-));
+        configuration.setAllowedOrigins(List.of(
+            "http://localhost:5173",
+            "http://localhost:3000",
+            "https://attendance-management-system-six-rho.vercel.app",
+            "https://attendance-management-system-dcohi968g.vercel.app",
+            "https://attendance-management-system-mq1941il1.vercel.app"
+        ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
@@ -62,7 +63,8 @@ public class SecurityConfig {
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()  // ✅ preflight
+                .requestMatchers("/api/auth/**").permitAll()              // ✅ public auth
                 .anyRequest().authenticated())
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
