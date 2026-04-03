@@ -42,7 +42,7 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of(
             "http://localhost:5173",
             "http://localhost:3000",
-            "https://attendance-management-system-6y9v.onrender.com"  // ✅ your deployed frontend
+            "https://attendance-management-system-mq1941il1.vercel.app"  // ✅ your deployed frontend
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(List.of("*"));
