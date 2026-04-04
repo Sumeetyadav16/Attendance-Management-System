@@ -47,6 +47,10 @@ public class SecurityConfig {
             "https://attendance-management-system-dcohi968g.vercel.app",
             "https://attendance-management-system-mq1941il1.vercel.app"
         ));
+        configuration.setAllowedOriginPatterns(List.of(
+    "http://localhost:*",
+    "https://*.vercel.app"  // ✅ covers ALL vercel deployments
+));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
